@@ -36,6 +36,7 @@ function changeFilter(value:FilterTypeValueType) {
         let task = tasks.find(t => t.id === id);
         if (task){
             task.isDone = isDone;
+
             setTasks([...tasks])
         }
     }
@@ -47,6 +48,8 @@ function changeFilter(value:FilterTypeValueType) {
                       changeFilter={changeFilter}
                       addTask={addTask}
                       changeTaskStatus={changeStatus}
+                      filter={filter}
+
             />
 
         </div>
