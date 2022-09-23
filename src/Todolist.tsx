@@ -7,20 +7,23 @@ import {FilterValuesType} from "./App";
     isDone: boolean
 }
 
-type PropsType = {
+export type PropsType = {
+     toDoListId: string
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskID: string) => void
-    changeFilter: (values: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (id: string, isDone: boolean) => void
+    removeTask: (taskID: string, toDoListId: string) => void
+    changeFilter: (values: FilterValuesType, toDoListId: string) => void
+    addTask: (title: string, toDoListId: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean,toDoListId: string) => void
     filter: FilterValuesType
+    removeTodoList: (toDoListId: string) => void
 
 }
 
 export function Todolist(props: PropsType) {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
+    let taskItem: any = <span>Tasks list is empty</span>
     const addTask = () => {
         if (title.trim() !== "") {
             props.addTask(title)
