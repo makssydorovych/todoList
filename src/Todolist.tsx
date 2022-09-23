@@ -64,7 +64,10 @@ export function Todolist(props: PropsType) {
             : <div>Please create list item</div>
     return(
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.title}
+                <button onClick={() => props.removeTodoList(props.toDoListId)}>X</button>
+            </h3>
+
             <div>
                 <input
                     className={error ? "error" : ""}
@@ -90,7 +93,7 @@ export function Todolist(props: PropsType) {
 
             </div>
         </div>
-    )
+    );
 
 }
 
