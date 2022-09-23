@@ -1,5 +1,5 @@
 import React, {useState, ChangeEvent, KeyboardEvent} from 'react';
-import {FilterTypeValueType} from "./App";
+import {FilterValuesType} from "./App";
 
  export type TaskType = {
     taskId: string
@@ -11,10 +11,10 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (taskID: string) => void
-    changeFilter: (values: FilterTypeValueType) => void
+    changeFilter: (values: FilterValuesType) => void
     addTask: (title: string) => void
     changeTaskStatus: (id: string, isDone: boolean) => void
-    filter: FilterTypeValueType
+    filter: FilterValuesType
 
 }
 
