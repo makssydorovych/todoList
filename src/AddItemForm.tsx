@@ -1,31 +1,33 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 
 type AddItemFormType = {
-    addTask: () => void
+    addItem: (title: string) => void
 }
-const AddItemForm = () => {
-    let [title, setTitle] = useState("")
+const AddItemForm = (props: AddItemFormType) => {
+    let [title, setTitle] = useState<string>("")
     let [error, setError] = useState<boolean>(false)
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         if (error) setError(false)
         setTitle(e.currentTarget.value)
-        const userMessage =
-            error
-                ? <div style={{color: "hotpink"}}>Title is required</div>
-                : <div>Please create list item</div>
+
     }
-    const addTask= ()=>{
+
+    const addItem= ()=>{
         const trimmedTitle = title.trim()
         if(trimmedTitle){
-            props.addTask(trimmedTitle, props.toDoListId)
+            props.addItem(trimmedTitle)
         }else{
             setError(true)
         }
         setTitle("")
     }
     const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) =>{
-        if(e.key === "Enter")addTask()
+        if(e.key === "Enter")addItem()
     }
+    const userMessage =
+        error
+            ? <div style={{color: "hotpink"}}>Title is required</div>
+            : <div>Please create list item's title</div>
     return (
         <div>
             <input
@@ -35,7 +37,7 @@ const AddItemForm = () => {
                 onKeyDown={onKeyDownAddTask}
 
             />
-            <button onClick={addTask}>+</button>
+            <button onClick={addItem}>+</button>
             {userMessage}
         </div>
     );
