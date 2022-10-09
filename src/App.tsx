@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from "uuid";
@@ -11,7 +11,7 @@ type TodoListType = {
     filter: FilterValuesType
 }
 type TaskStateType = {
-    [toDoListId: string]: Array<TaskType>
+    [todoListId: string]: Array<TaskType>
 }
 
 function App() {
@@ -62,12 +62,22 @@ function App() {
     const changeTodoListTitle = (title:string, todoListId: string) => {
         setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, title} : tl))
     }
-    const changeTodoListFilter = (filter: FilterValuesType, toDoListId: string) => {
-        setTodoLists(todoLists.map(tl => tl.id === toDoListId ? {...tl, filter: filter} : tl))
+    const changeTodoListFilter = (filter: FilterValuesType, todoListId: string) => {
+        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: filter} : tl))
     }
     const removeTodolist = (todoListsId: string) => {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListsId))
     }
+
+    const addTodoList = (title: string) =>{
+        const newTodoListId: string = v1()
+        setTodoLists([...todoLists, {id: newTodoListId, title, filter: "all"}])
+        setTasks({...tasks, [newTodoListId] : []})
+    }
+
+    // useEffect((e) => {}, [todoLists])
+
+    //UI:
     const getTasksForTodoList = (todoList: TodoListType) => {
         switch (todoList.filter) {
             case "active":
@@ -84,7 +94,7 @@ function App() {
         return (
             <Todolist
                 key={tl.id}
-                toDoListId={tl.id}
+                todoListId={tl.id}
                 title={tl.title}
                 tasks={tasks}
                 removeTask={removeTask}
@@ -99,11 +109,7 @@ function App() {
             />
         )
     })
-const addTodoList = (title: string) =>{
-        const newTodoListId: string = v1()
-    setTodoLists([...todoLists, {id: newTodoListId, title, filter: "all"}])
-    setTasks({...tasks, [newTodoListId] : []})
-}
+
     return (
         <div className="App">
             <AddItemForm addItem={addTodoList}/>
