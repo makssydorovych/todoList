@@ -88,7 +88,11 @@ function App() {
             />
         )
     })
-
+const addTodoList = (title: string) =>{
+        const newTodoListId: string = v1()
+    setTodoLists([...todoLists, {id: newTodoListId, title, filter: "all"}])
+    setTasks({...tasks, [newTodoListId] : []})
+}
     return (
         <div className="App">
             {todoListComponents}
