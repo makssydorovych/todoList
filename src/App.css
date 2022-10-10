@@ -1,21 +1,21 @@
-.App {
-  padding: 30px;
-  display: flex;
-}
+/*.App {*/
+/*  padding: 30px;*/
+/*  display: flex;*/
+/*}*/
 
-.App > div {
-  margin-right: 50px;
-}
-.error {
-  border: red 1px solid;
-}
+/*.App > div {*/
+/*  margin-right: 50px;*/
+/*}*/
+/*!*.error {*!*/
+/*!*  border: red 1px solid;*!*/
+/*!*}*!*/
 
-.error-message {
-  color: red;
-}
-.active-filter {
-  background-color: aquamarine;
-}
+/*!*.error-message {*!*/
+/*!*  color: red;*!*/
+/*!*}*!*/
+/*.active-filter {*/
+/*  background-color: aquamarine;*/
+/*}*/
 .is-done {
   text-decoration: line-through;
   color: deeppink;

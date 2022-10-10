@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import {IconButton} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 
 type AddItemFormType = {
     addItem: (title: string) => void
@@ -32,18 +32,21 @@ const AddItemForm = (props: AddItemFormType) => {
             : <div>Please create list item's title</div>
     return (
         <div>
-            <input
-                className={error ? "error" : ""}
+            <TextField
+                variant={"outlined"}
+                size={"small"}
+                error={error}
                 value={title}
                 onChange={changeTitle}
                 onKeyDown={onKeyDownAddTask}
-
+                label={"Title"}
+                helperText={userMessage}
             />
             <IconButton onClick={addItem} color="secondary" >
                 <AddCircleOutlineIcon/>
             </IconButton>
 
-            {userMessage}
+
         </div>
     );
 };
