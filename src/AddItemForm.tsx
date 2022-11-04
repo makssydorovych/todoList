@@ -28,8 +28,8 @@ const AddItemForm = (props: AddItemFormType) => {
     }
     const userMessage =
         error
-            ? <div style={{color: "hotpink"}}>Title is required</div>
-            : <div>Please create list item's title</div>
+            ? <span style={{color: "hotpink"}}>Title is required</span>
+            : <span>Please create list item's title</span>
     return (
         <div>
             <TextField

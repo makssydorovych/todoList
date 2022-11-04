@@ -31,7 +31,7 @@ export type PropsType = {
 export function Todolist(props: PropsType) {
 
     let taskItem: any = <span>Tasks list is empty</span>
-    if (props.tasks.length) {
+    if (props.tasks) {
         taskItem = props.tasks.map(task => {
             const changeTaskTitle = (title: string) => {
                 props.changeTaskTitle(task.id, title, props.todoListId)
