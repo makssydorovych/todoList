@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {Todolist} from './Todolist';
+import {TaskType} from './ReduxTodolist'
 import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
@@ -27,39 +28,39 @@ function App() {
     ])
     const [tasks, setTasks] = useState<TaskStateType>({
         [todoListId_1]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "RestAPI", isDone: false},
-            {id: v1(), title: "GraphQL", isDone: false}
+            {taskId: v1(), title: "HTML&CSS", isDone: true},
+            {taskId: v1(), title: "JS", isDone: true},
+            {taskId: v1(), title: "ReactJS", isDone: false},
+            {taskId: v1(), title: "RestAPI", isDone: false},
+            {taskId: v1(), title: "GraphQL", isDone: false}
         ],
         [todoListId_2]: [
-            {id: v1(), title: "Beer", isDone: true},
-            {id: v1(), title: "Fish", isDone: true},
-            {id: v1(), title: "Meat", isDone: false},
-            {id: v1(), title: "RestAPI", isDone: false},
-            {id: v1(), title: "GraphQL", isDone: false}
+            {taskId: v1(), title: "Beer", isDone: true},
+            {taskId: v1(), title: "Fish", isDone: true},
+            {taskId: v1(), title: "Meat", isDone: false},
+            {taskId: v1(), title: "RestAPI", isDone: false},
+            {taskId: v1(), title: "GraphQL", isDone: false}
         ]
     })
 
     const removeTask = (taskId: string, todoListId: string) => {
-        setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.id !== taskId)})
+        setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.taskId !== taskId)})
     }
 
     const addTask = (title: string, todoListId: string) => {
-        let newTask: TaskType = {id: v1(), title: title, isDone: false};
+        let newTask: TaskType = {taskId: v1(), title: title, isDone: false};
         const todolistTasks = tasks[todoListId]
         setTasks({...tasks, [todoListId]: [newTask, ...todolistTasks]})
     }
     const changeTaskStatus = (taskId: string, isDone: boolean, todoListId: string) => {
 
         setTasks({
-            ...tasks, [todoListId]: tasks[todoListId].map(t => t.id === taskId ? {...t, isDone: isDone} : t)
+            ...tasks, [todoListId]: tasks[todoListId].map(t => t.taskId === taskId ? {...t, isDone: isDone} : t)
         })
     }
     const changeTaskTitle = (taskId: string, title: string, todoListId: string) => {
         setTasks({
-            ...tasks, [todoListId]: tasks[todoListId].map(t => t.id === taskId ? {...t, title} : t)
+            ...tasks, [todoListId]: tasks[todoListId].map(t => t.taskId === taskId ? {...t, title} : t)
         })
     }///////
 

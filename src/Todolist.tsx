@@ -9,10 +9,11 @@ import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem} from "@materi
 
 
 export type TaskType = {
-    id: string
+    taskId: string
     title: string
     isDone: boolean
 }
+
 
 export type PropsType = {
     todoListId: string
@@ -34,14 +35,14 @@ export function Todolist(props: PropsType) {
     if (props.tasks) {
         taskItem = props.tasks.map(task => {
             const changeTaskTitle = (title: string) => {
-                props.changeTaskTitle(task.id, title, props.todoListId)
+                props.changeTaskTitle(task.taskId, title, props.todoListId)
             }
             return (
                 <ListItem
                     style={{padding:"0"}}
-                    key={task.id} className={task.isDone ? "is-done" : ""}>
+                    key={task.taskId} className={task.isDone ? "is-done" : ""}>
                     <Checkbox
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked, props.todoListId)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.taskId, e.currentTarget.checked, props.todoListId)}
                         style={{color: "hotpink"}}
                         checked={task.isDone}
                     />
@@ -49,7 +50,7 @@ export function Todolist(props: PropsType) {
                     <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
                     <IconButton
                         color="primary"
-                        onClick={() => props.removeTask(task.id, props.todoListId)}>
+                        onClick={() => props.removeTask(task.taskId, props.todoListId)}>
                         <HighlightOffIcon/>
                     </IconButton>
 
