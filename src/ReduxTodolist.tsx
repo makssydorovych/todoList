@@ -6,7 +6,6 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import AddItemForm from "./AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
-import {Delete} from "@material-ui/icons";
 import {ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC} from "./reducers/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
 export type TaskType = {
@@ -61,10 +60,10 @@ export const ReduxTodolist = ({todolistId, title, filter} :ReduxTodolistPropsTyp
                         tasks.map(t => {
                             const onClickHandler = () => dispatch(removeTaskAC(t.taskId, todolistId))
                             const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                let newIsDoneValue = e.currentTarget.checked;
+                                // let newIsDoneValue = e.currentTarget.checked;
                                 dispatch(changeTaskStatusAC(t.taskId, t.isDone, todolistId));
                             }
-                            const onTitleChangeHandler = (title: string) => {
+                            const onTitleChangeHandler = () => {
                                 dispatch(changeTaskTitleAC(t.taskId, t.title, todolistId))
                             }
                             return <div key={t.taskId} className={t.isDone ? "is-done" : ""}>
@@ -76,7 +75,7 @@ export const ReduxTodolist = ({todolistId, title, filter} :ReduxTodolistPropsTyp
 
                                 <EditableSpan title={t.title} changeTitle={onTitleChangeHandler} />
                                 <IconButton onClick={onClickHandler}>
-                                    <Delete />
+                                    <HighlightOffIcon/>
                                 </IconButton>
                             </div>
                         })

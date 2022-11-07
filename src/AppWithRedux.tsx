@@ -29,7 +29,6 @@ export type TaskStateType = {
 function AppWithRedux() {
 
     let todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todolists)
-    let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
     const removeTask = (taskId: string, todoListId: string) => {
@@ -83,30 +82,13 @@ function AppWithRedux() {
                     <Grid container spacing={3}>
                         {
                             todoLists.map(tl => {
-                                let allTodolistTasks = tasks[tl.id];
-                                let tasksForTodolist = allTodolistTasks;
-
-                                if (tl.filter === "active") {
-                                    tasksForTodolist = allTodolistTasks.filter(tl => !tl.isDone);
-                                }
-                                if (tl.filter === "completed") {
-                                    tasksForTodolist = allTodolistTasks.filter(tl => tl.isDone);
-                                }
-
                                 return <Grid item key={tl.id}>
                                     <Paper style={{padding: "10px"}}>
                                         <ReduxTodolist
-                                            id={tl.id}
+                                            todolistId={tl.id}
                                             title={tl.title}
-                                            tasks={tasksForTodolist}
-                                            removeTask={removeTask}
-                                            changeFilter={changeTodoListFilter}
-                                            addTask={addTask}
-                                            changeTaskStatus={changeTaskStatus}
                                             filter={tl.filter}
-                                            removeTodolist={removeTodolist}
-                                            changeTaskTitle={changeTaskTitle}
-                                            changeTodolistTitle={changeTodoListTitle}
+
                                         />
                                     </Paper>
                                 </Grid>

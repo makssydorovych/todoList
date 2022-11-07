@@ -21,32 +21,29 @@ export const tasksReducer = (state= initialState, action: ActionType): TaskState
         case 'REMOVE-TASK':
             return {
                 ...state,
-                [action.payload.todoListsId]: state[action.payload.todoListsId].filter(t => t.id !== action.payload.taskId)
+                [action.payload.todoListsId]: state[action.payload.todoListsId].filter(t => t.taskId !== action.payload.taskId)
             }
         case 'ADD-TASK':
 
             return {
                 ...state,
                 [action.payload.todolistId]: [{
-                    id: v1(),
+                    taskId: v1(),
                     title: action.payload.title,
                     isDone: false
                 }, ...state[action.payload.todolistId]]
             }
         case 'CHANGE-TASK-STATUS':
             return {
-                ...state,
-                [action.payload.todoListsId]: state[action.payload.todoListsId].map(t => t.id === action.payload.taskId ? {
-                    ...t,
-                    isDone: action.payload.isDone
-                } : t)
+              ...state,
+                [action.payload.todoListsId]: state[action.payload.todoListsId].map(
+                    t => t.taskId === action.payload.taskId ? {...t, isDone: !t.isDone} : t)
             }
         case 'CHANGE-TASK-TITLE':
             return {
                 ...state,
-                [action.payload.todoListsId]: state[action.payload.todoListsId].map(t => t.id === action.payload.taskId ?
-                    {...t, title: action.payload.title} : t
-                )
+                [action.payload.todoListsId]: state[action.payload.todoListsId].map(
+                    t => t.taskId === action.payload.taskId ? {...t, title: action.payload.title} : t)
             }
         case "ADD-TODOLIST":
             const stateCopy = {...state};
