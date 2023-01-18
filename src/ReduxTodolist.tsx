@@ -1,13 +1,15 @@
-import React, {ChangeEvent} from 'react';
+import React, {memo, useCallback} from 'react';
 import {FilterValuesType} from "./AppWithRedux";
 import EditableSpan from "./EditableSpan";
-import {Button, ButtonGroup, Checkbox, IconButton, List} from "@material-ui/core";
+import {Button, ButtonGroup, IconButton, List} from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import AddItemForm from "./AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
 import {ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC} from "./reducers/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
+import {addTaskAC} from "./reducers/tasks-reducer";
+import {Task} from "./Task";
+
 export type TaskType = {
     taskId: string
     title: string
@@ -20,7 +22,7 @@ export type  ReduxTodolistPropsType = {
     filter: FilterValuesType
 }
 
-export const ReduxTodolist = ({todolistId, title, filter} :ReduxTodolistPropsType) => {
+export const ReduxTodolist = memo(({todolistId, title, filter}: ReduxTodolistPropsType) => {
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todolistId])
     const dispatch = useDispatch()
 
@@ -30,17 +32,17 @@ export const ReduxTodolist = ({todolistId, title, filter} :ReduxTodolistPropsTyp
     const changeTodoListTitle = (title: string) => {
         dispatch(ChangeTodolistTitleAC(title, todolistId))
     }
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, todolistId))
-    }
+    }, [dispatch, todolistId])
 
     if (filter === "active") {
         tasks = tasks.filter(t => !t.isDone);
     }
     if (filter === "completed") {
-        tasks = tasks.filter(t => t.isDone );
+        tasks = tasks.filter(t => t.isDone);
     }
-    const onAllClickHandler = () =>dispatch(ChangeTodolistFilterAC("all", todolistId))
+    const onAllClickHandler = () => dispatch(ChangeTodolistFilterAC("all", todolistId))
     const onActiveClickHandler = () => dispatch(ChangeTodolistFilterAC("active", todolistId))
     const onCompletedClickHandler = () => dispatch(ChangeTodolistFilterAC("completed", todolistId))
     return (
@@ -56,51 +58,51 @@ export const ReduxTodolist = ({todolistId, title, filter} :ReduxTodolistPropsTyp
 
             <List>
                 <div>
-                    {
-                        tasks.map(t => {
-                            const onClickHandler = () => dispatch(removeTaskAC(t.taskId, todolistId))
-                            const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                // let newIsDoneValue = e.currentTarget.checked;
-                                dispatch(changeTaskStatusAC(t.taskId, t.isDone, todolistId));
-                            }
-                            const onTitleChangeHandler = () => {
-                                dispatch(changeTaskTitleAC(t.taskId, t.title, todolistId))
-                            }
-                            return <div key={t.taskId} className={t.isDone ? "is-done" : ""}>
-                                <Checkbox
-                                    checked={t.isDone}
-                                    color="primary"
-                                    onChange={onChangeHandler}
-                                />
+                    return {
+                    tasks.map(t => (
 
-                                <EditableSpan title={t.title} changeTitle={onTitleChangeHandler} />
-                                <IconButton onClick={onClickHandler}>
-                                    <HighlightOffIcon/>
-                                </IconButton>
-                            </div>
-                        })
-                    }
+                        <Task
+                            key={t.taskId}
+                            task={t}
+                            todolistId={todolistId}
+                        />
+                    ))
+                }
                 </div>
             </List>
             <div><ButtonGroup variant="contained">
-                <Button disableElevation
-                        color={filter === "all" ? "secondary" : "primary"}
-                        size={"small"} variant="contained"
-
-                    // className={props.filter === "all" ? "active-filter" : ""}
-                        onClick={onAllClickHandler}>all
-                </Button>
-                <Button disableElevation size={"small"} variant="contained"
-                        color={filter === "active" ? "secondary" : "primary"}
-                        onClick={onActiveClickHandler}>active
-                </Button>
-                <Button disableElevation size="small" variant="contained"
-                        color={filter === "completed" ? "secondary" : "primary"}
-                        onClick={onCompletedClickHandler}>completed
-                </Button>
+                <ButtonMemo
+                    color={filter === "all" ? "secondary" : "primary"}
+                    onClick={onAllClickHandler}>all
+                </ButtonMemo>
+                <ButtonMemo
+                            color={filter === "active" ? "secondary" : "primary"}
+                            onClick={onActiveClickHandler} >active
+                </ButtonMemo>
+                <ButtonMemo
+                            color={filter === "completed" ? "secondary" : "primary"}
+                            onClick={onCompletedClickHandler} >completed
+                </ButtonMemo>
             </ButtonGroup>
             </div>
         </div>
     );
-};
+});
 
+type ButtonMemoPropsType = {
+
+    color: 'primary' | 'secondary',
+    onClick: () => void
+    children: string;
+}
+const ButtonMemo = memo((props: ButtonMemoPropsType) => {
+    return (
+
+        <Button disableElevation
+                color={props.color}
+                onClick={onclick}
+                >
+
+</Button>
+)
+})

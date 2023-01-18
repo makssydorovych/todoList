@@ -5,7 +5,7 @@ import {IconButton, TextField} from "@material-ui/core";
 type AddItemFormType = {
     addItem: (title: string) => void
 }
-const AddItemForm = (props: AddItemFormType) => {
+const AddItemForm = React.memo((props: AddItemFormType) => {
     let [title, setTitle] = useState<string>("")
     let [error, setError] = useState<boolean>(false)
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,6 +24,7 @@ const AddItemForm = (props: AddItemFormType) => {
         setTitle("")
     }
     const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) =>{
+
         if(e.key === "Enter")addItem()
     }
     const userMessage =
@@ -49,6 +50,6 @@ const AddItemForm = (props: AddItemFormType) => {
 
         </div>
     );
-};
+});
 
 export default AddItemForm;
