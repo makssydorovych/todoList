@@ -57,10 +57,8 @@ export const ReduxTodolist = memo(({todolistId, title, filter}: ReduxTodolistPro
             <AddItemForm addItem={addTask}/>
 
             <List>
-                <div>
-                    return {
+                    {
                     tasks.map(t => (
-
                         <Task
                             key={t.taskId}
                             task={t}
@@ -68,41 +66,41 @@ export const ReduxTodolist = memo(({todolistId, title, filter}: ReduxTodolistPro
                         />
                     ))
                 }
-                </div>
+
             </List>
-            <div><ButtonGroup variant="contained">
-                <ButtonMemo
-                    color={filter === "all" ? "secondary" : "primary"}
-                    onClick={onAllClickHandler}>all
-                </ButtonMemo>
-                <ButtonMemo
-                            color={filter === "active" ? "secondary" : "primary"}
-                            onClick={onActiveClickHandler} >active
-                </ButtonMemo>
-                <ButtonMemo
-                            color={filter === "completed" ? "secondary" : "primary"}
-                            onClick={onCompletedClickHandler} >completed
-                </ButtonMemo>
-            </ButtonGroup>
+            <div style={{paddingTop: '10px'}}>
+                <Button variant={filter === 'all' ? 'outlined' : 'text'}
+                        onClick={onAllClickHandler}
+                        color={'default'}
+                >All
+                </Button>
+                <Button variant={filter === 'active' ? 'outlined' : 'text'}
+                        onClick={onActiveClickHandler}
+                        color={'primary'}>Active
+                </Button>
+                <Button variant={filter === 'completed' ? 'outlined' : 'text'}
+                        onClick={onCompletedClickHandler}
+                        color={'secondary'}>Completed
+                </Button>
             </div>
         </div>
     );
 });
 
-type ButtonMemoPropsType = {
-
-    color: 'primary' | 'secondary',
-    onClick: () => void
-    children: string;
-}
-const ButtonMemo = memo((props: ButtonMemoPropsType) => {
-    return (
-
-        <Button disableElevation
-                color={props.color}
-                onClick={onclick}
-                >
-
-</Button>
-)
-})
+// type ButtonMemoPropsType = {
+//
+//     color: 'primary' | 'secondary',
+//     onClick: () => void
+//     children: string;
+// }
+// const ButtonMemo = memo((props: ButtonMemoPropsType) => {
+//     return (
+//
+//         <Button disableElevation
+//                 color={props.color}
+//                 onClick={onclick}
+//                 >
+//
+//             </Button>
+// )
+// })
