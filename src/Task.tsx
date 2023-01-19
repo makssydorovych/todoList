@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {ChangeEvent} from 'react';
 import {TaskType} from "./ReduxTodolist"
 import {Checkbox, IconButton} from "@material-ui/core";
 import EditableSpan from "./EditableSpan";
@@ -47,7 +47,6 @@ type TaskPropsType ={
 export  const Task = React.memo(({task, todolistId}: TaskPropsType) => {
     const {taskId, title, isDone} = task
     const dispatch = useDispatch()
-    // dispatch(removeTaskAC(taskId, todolistId))
     const onClickHandler = () => dispatch(removeTaskAC(taskId, todolistId))
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
