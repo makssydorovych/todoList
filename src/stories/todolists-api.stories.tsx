@@ -6,10 +6,10 @@ export default {
 }
 
 
-export const GetTodolists = () => {
+export const GetTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistAPI.getTodolists()
+        todolistAPI.getTodolist()
             .then((res)=> {
                 setState(res)
             })
@@ -21,7 +21,7 @@ export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         let title = "REACT&REDUX"
-        todolistAPI.createTodolists(title)
+        todolistAPI.createTodolist(title)
             .then((res)=>{
                 setState(res)
             })
