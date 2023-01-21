@@ -4,9 +4,22 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
-        'API-KEY': '4b3af02b-2c6c-49fd-b012-c48f3a9283dd'
+        'API-KEY': '27174707-1f72-4acd-871c-461d7e7565ed'
     }
 })
+export type TodolistType = {
+    addedDate: string
+    id: string
+    order: number
+    title: string
+}
+
+type ResponseType<T={}>={
+    data: T
+    fieldsErrors: string[]
+    messages: string[]
+    resultCode: number
+}
 
 export const todolistAPI = {
     getTodolist() {
@@ -28,16 +41,4 @@ export const todolistAPI = {
             .then((res) => res.data)
     }
 }
-type TodolistType = {
-    addedDate: string
-    id: string
-    order: number
-    title: string
-}
 
-type ResponseType<T={}>={
-    data: T
-    fieldsErrors: string[]
-    messages: string[]
-    resultCode: number
-}

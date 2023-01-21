@@ -1,19 +1,18 @@
 import {TaskStateType} from "../App";
 import {v1} from "uuid";
-import {AddTodolistAT, RemoveTodolistAT} from "./todolists-reducer";
-
-
-
-type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
-
-type AddTaskActionType = ReturnType<typeof addTaskAC>
-type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
-type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
+import {AddTodolistAC, RemoveTodolistAC, SetTodolistAC,} from "./todolists-reducer"
 
 
 const initialState: TaskStateType = {}
 
-type ActionType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | AddTodolistAT | RemoveTodolistAT;
+type ActionType =
+    ReturnType<typeof removeTaskAC> |
+    ReturnType<typeof addTaskAC> |
+    ReturnType<typeof changeTaskStatusAC> |
+    ReturnType<typeof changeTaskTitleAC> |
+    ReturnType<typeof AddTodolistAC> |
+    ReturnType<typeof RemoveTodolistAC> |
+    ReturnType<typeof SetTodolistAC>
 
 
 export const tasksReducer = (state= initialState, action: ActionType): TaskStateType => {
@@ -45,19 +44,24 @@ export const tasksReducer = (state= initialState, action: ActionType): TaskState
                 [action.payload.todoListsId]: state[action.payload.todoListsId].map(
                     t => t.taskId === action.payload.taskId ? {...t, title: action.payload.title} : t)
             }
-        case "ADD-TODOLIST":
-            const stateCopy = {...state};
-            stateCopy[action.todolistId] = [];
-            return stateCopy;
+        // case "ADD-TODOLIST":
+        //     const stateCopy = {...state};
+        //     stateCopy[action.todolistId] = [];
+        //     return stateCopy;
 
         case "REMOVE-TODOLIST":
              {
                 let stateCopy = {...state};
-                delete stateCopy[action.todoListsId]
+                delete stateCopy[action.todolistId]
                 return stateCopy;
             }
 
-
+        case "SET-TODOLIST":
+            const stateCopy = {...state}
+            action.todos.forEach((tl)=>{
+                stateCopy[tl.id] = []
+            })
+            return stateCopy
         default:
             return state
     }

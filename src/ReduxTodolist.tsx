@@ -1,5 +1,5 @@
 import React, {memo, useCallback} from 'react';
-import {FilterValuesType} from "./AppWithRedux";
+
 import EditableSpan from "./EditableSpan";
 import {Button, ButtonGroup, IconButton, List} from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
@@ -9,6 +9,7 @@ import {AppRootStateType} from "./reducers/store";
 import {ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC} from "./reducers/todolists-reducer";
 import {addTaskAC} from "./reducers/tasks-reducer";
 import {Task} from "./Task";
+import {FilterValuesType} from "./App";
 
 export type TaskType = {
     taskId: string

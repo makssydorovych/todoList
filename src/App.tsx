@@ -102,7 +102,7 @@ function App() {
                 <Paper elevation={8} style={{padding: "20px"}}>
                     <Todolist
 
-                        todoListId={tl.id}
+                        todolistId={tl.id}
                         title={tl.title}
                         tasks={tasks}
                         removeTask={removeTask}

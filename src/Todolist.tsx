@@ -16,7 +16,7 @@ export type TaskType = {
 
 
 export type PropsType = {
-    todoListId: string
+    todolistId: string
     title: string
     tasks: Array<TaskType>
     removeTask: (taskID: string, todoListId: string) => void
@@ -35,14 +35,14 @@ export function Todolist(props: PropsType) {
     if (props.tasks) {
         taskItem = props.tasks.map(task => {
             const changeTaskTitle = (title: string) => {
-                props.changeTaskTitle(task.taskId, title, props.todoListId)
+                props.changeTaskTitle(task.taskId, title, props.todolistId)
             }
             return (
                 <ListItem
                     style={{padding:"0"}}
                     key={task.taskId} className={task.isDone ? "is-done" : ""}>
                     <Checkbox
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.taskId, e.currentTarget.checked, props.todoListId)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.taskId, e.currentTarget.checked, props.todolistId)}
                         style={{color: "hotpink"}}
                         checked={task.isDone}
                     />
@@ -50,7 +50,7 @@ export function Todolist(props: PropsType) {
                     <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
                     <IconButton
                         color="primary"
-                        onClick={() => props.removeTask(task.taskId, props.todoListId)}>
+                        onClick={() => props.removeTask(task.taskId, props.todolistId)}>
                         <HighlightOffIcon/>
                     </IconButton>
 
@@ -58,11 +58,11 @@ export function Todolist(props: PropsType) {
             )
         })
     }
-    const ChangeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.todoListId)
+    const ChangeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.todolistId)
 
 
     const addTask = (title: string) => {
-        props.addTask(title, props.todoListId)
+        props.addTask(title, props.todolistId)
     }
     const handlerCreator = (filter: FilterValuesType, todoListId: string) => {
         return () => props.changeFilter(filter, todoListId)
@@ -75,7 +75,7 @@ export function Todolist(props: PropsType) {
 
                 <IconButton
                     color="primary"
-                    onClick={() => props.removeTodoList(props.todoListId)}>
+                    onClick={() => props.removeTodoList(props.todolistId)}>
                     <HighlightOffIcon/>
                 </IconButton>
             </h3>
@@ -90,15 +90,15 @@ export function Todolist(props: PropsType) {
                         size={"small"} variant="contained"
 
                     // className={props.filter === "all" ? "active-filter" : ""}
-                        onClick={handlerCreator("all", props.todoListId)}>all
+                        onClick={handlerCreator("all", props.todolistId)}>all
                 </Button>
                 <Button disableElevation size={"small"} variant="contained"
                         color={props.filter === "active" ? "secondary" : "primary"}
-                        onClick={handlerCreator("active", props.todoListId)}>active
+                        onClick={handlerCreator("active", props.todolistId)}>active
                 </Button>
                 <Button disableElevation size="small" variant="contained"
                         color={props.filter === "completed" ? "secondary" : "primary"}
-                        onClick={handlerCreator("completed", props.todoListId)}>completed
+                        onClick={handlerCreator("completed", props.todolistId)}>completed
                 </Button>
             </ButtonGroup>
             </div>
