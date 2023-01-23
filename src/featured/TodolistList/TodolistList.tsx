@@ -6,12 +6,11 @@ import {
     changeTodolistTitleTC, fetchTodolistsTC, FilterValuesType,
     removeTodolistTC, TodolistDomainType,
 } from "./todolists-reducer";
-import {Grid, Paper} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
 import {TaskStatuses} from "../../api/todolist-api";
 import AddItemForm from "../../components/AddItemForm";
-
-
 
 
 export const TodolistList: React.FC = () => {

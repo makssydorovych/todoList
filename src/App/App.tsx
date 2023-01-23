@@ -1,14 +1,15 @@
 import React from 'react';
 import '../App.css';
-import {AppBar, Container, Grid, Paper, Toolbar, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {Menu} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import {TodolistList} from "../featured/TodolistList/TodolistList";
-
-
-
-
+import Container from '@mui/material/Container';
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import AppBar from "@mui/material/AppBar";
 
 
 function App() {
@@ -28,11 +29,11 @@ function App() {
             <Container fixed>
                 <Grid container spacing={3}>
 
-                            return <Grid>
-                                <Paper style={{padding: "10px"}}>
-                                    <TodolistList/>
-                                </Paper>
-                            </Grid>
+                    <Grid>
+                        <Paper style={{padding: "10px"}}>
+                            <TodolistList/>
+                        </Paper>
+                    </Grid>
 
                 </Grid>
             </Container>
