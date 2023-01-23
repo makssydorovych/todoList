@@ -1,10 +1,16 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import {IconButton, TextField} from "@material-ui/core";
+import {TextField} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+
 
 type AddItemFormType = {
     addItem: (title: string) => void
 }
+
+function AddCircleOutlineIcon() {
+    return null;
+}
+
 const AddItemForm = React.memo((props: AddItemFormType) => {
     let [title, setTitle] = useState<string>("")
     let [error, setError] = useState<boolean>(false)
