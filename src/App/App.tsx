@@ -13,6 +13,7 @@ import AppBar from "@mui/material/AppBar";
 import LinearProgress from "@mui/material/LinearProgress";
 import {useAppSelector} from "./store";
 import {RequestStatusType} from "./app-reducer";
+import {ErrorSnackbar} from "../components/ErrorSnackbar";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
                     <Grid>
                         <Paper style={{padding: "10px"}}>
                             <TodolistList/>
+                            <ErrorSnackbar />
                         </Paper>
                     </Grid>
 

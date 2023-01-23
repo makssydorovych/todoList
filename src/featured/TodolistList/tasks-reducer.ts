@@ -6,6 +6,7 @@ import {
 } from "./todolists-reducer"
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolist-api'
 import {AppRootStateType} from "../../App/store";
+import {AppActionsType, setStatusAc} from "../../App/app-reducer";
 
 
 const initialState: TasksStateType = {}
@@ -54,11 +55,13 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
 
 // thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setStatusAc('loading'))
     todolistsAPI.getTasks(todolistId)
         .then((res) => {
             const tasks = res.data.items
             const action = setTasksAC(tasks, todolistId)
             dispatch(action)
+            dispatch(setStatusAc('succeeded'))
         })
 }
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
@@ -69,15 +72,18 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
         })
 }
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setStatusAc('loading'))
     todolistsAPI.createTask(todolistId, title)
         .then(res => {
             const task = res.data.data.item
             const action = addTaskAC(task)
             dispatch(action)
+            dispatch(setStatusAc('succeeded'))
         })
 }
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
     (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
+        dispatch(setStatusAc('loading'))
         const state = getState()
         const task = state.tasks[todolistId].find(t => t.id === taskId)
         if (!task) {
@@ -100,6 +106,7 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
             .then(res => {
                 const action = updateTaskAC(taskId, domainModel, todolistId)
                 dispatch(action)
+                dispatch(setStatusAc('succeeded'))
             })
     }
 
@@ -123,3 +130,4 @@ type ActionsType =
     | RemoveTodolistActionType
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
+| AppActionsType
