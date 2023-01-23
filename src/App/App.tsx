@@ -10,12 +10,16 @@ import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
+import LinearProgress from "@mui/material/LinearProgress";
+import {useAppSelector} from "./store";
+import {RequestStatusType} from "./app-reducer";
 
 
 function App() {
+    const status = useAppSelector<RequestStatusType>((state) => state.app.status)
     return (
         <div className="App">
-            <AppBar position="static">
+            <AppBar position="static" >
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <Menu/>
@@ -25,8 +29,9 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress color="secondary"/>}
             </AppBar>
-            <Container fixed>
+            <Container style={{padding: "30px"}}>
                 <Grid container spacing={3}>
 
                     <Grid>
