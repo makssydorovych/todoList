@@ -10,6 +10,7 @@ import {FilterValuesType} from "../todolists-reducer";
 import {fetchTasksTC} from "../tasks-reducer";
 import {useAppDispatch} from "../../../App/store";
 import List from '@mui/material/List';
+import {RequestStatusType} from "../../../App/app-reducer";
 
 
 type PropsType = {
@@ -24,6 +25,7 @@ type PropsType = {
     removeTodolist: (id: string) => void
     changeTodolistTitle: (id: string, newTitle: string) => void
     filter: FilterValuesType
+    entityStatus: RequestStatusType
 
 }
 
@@ -66,7 +68,7 @@ export const Todolist = memo((props: PropsType) => {
             <h3>
                 <EditableSpan title={props.title} changeTitle={changeTodolistTitle}/>
 
-                <IconButton color="primary" onClick={removeTodolist}>
+                <IconButton color="primary" onClick={removeTodolist} disabled={props.entityStatus === 'loading'}>
                     <HighlightOffIcon/>
                 </IconButton>
             </h3>
