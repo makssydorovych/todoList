@@ -61,8 +61,8 @@ export const removeTodolistTC = (todolistId: string) => {
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setStatusAc('succeeded'))
             }).catch((e)=>{
-            dispatch(setStatusAc('loading'))
-            dispatch(changeEntityStatusAC(todolistId, 'idle'))
+            dispatch(setStatusAc('failed'))
+            dispatch(changeEntityStatusAC(todolistId, 'failed'))
             dispatch(setErrorAc(e.message))
         })
     }
@@ -73,7 +73,8 @@ export const addTodolistTC = (title: string) => {
         todolistsAPI.createTodolist(title)
             .then((res) => {
                 dispatch(addTodolistAC(res.data.data.item))
-                dispatch(setStatusAc('succeeded'))
+                dispatch(setStatusAc('failed'))
+                dispatch(setErrorAc("error"))
             })
     }
 }

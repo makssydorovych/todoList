@@ -6,6 +6,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 type AddItemFormType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
 
@@ -47,9 +48,10 @@ const AddItemForm = React.memo((props: AddItemFormType) => {
                 onKeyDown={onKeyDownAddTask}
                 label={"Title"}
                 helperText={userMessage}
+                disabled={props.disabled}
             />
-            <IconButton onClick={addItem} color="secondary" >
-                <AddCircleOutlineIcon/>
+            <IconButton onClick={addItem} color="secondary" disabled={props.disabled}>
+                <AddCircleOutlineIcon />
             </IconButton>
 
 
