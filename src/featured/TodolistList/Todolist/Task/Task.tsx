@@ -3,6 +3,7 @@ import {TaskStatuses, TaskType} from "../../../../api/todolist-api"
 import EditableSpan from "../../../../components/EditableSpan";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 type TaskPropsType = {
     task: TaskType
@@ -12,9 +13,7 @@ type TaskPropsType = {
     removeTask: (taskId: string, todolistId: string) => void
 }
 
-function HighlightOffIcon() {
-    return null;
-}
+
 
 export const Task = React.memo((props:TaskPropsType) => {
 

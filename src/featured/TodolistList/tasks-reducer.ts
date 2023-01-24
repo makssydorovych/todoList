@@ -6,7 +6,7 @@ import {
 } from "./todolists-reducer"
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolist-api'
 import {AppRootStateType} from "../../App/store";
-import {AppActionsType, setStatusAc} from "../../App/app-reducer";
+import {AppActionsType, setErrorAc, setStatusAc} from "../../App/app-reducer";
 
 
 const initialState: TasksStateType = {}
@@ -75,10 +75,21 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
     dispatch(setStatusAc('loading'))
     todolistsAPI.createTask(todolistId, title)
         .then(res => {
-            const task = res.data.data.item
-            const action = addTaskAC(task)
-            dispatch(action)
-            dispatch(setStatusAc('succeeded'))
+            if(res.data.resultCode === 0) {
+                const task = res.data.data.item
+                const action = addTaskAC(task)
+                dispatch(action)
+                dispatch(setStatusAc('succeeded'))
+            }else{
+                if(res.data.messages.length){
+                    dispatch(setErrorAc(res.data.messages[0]))
+                    dispatch(setStatusAc('failed'))
+                }else{
+                    dispatch(setErrorAc("error"))
+                }
+
+            }
+
         })
 }
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
