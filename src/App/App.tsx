@@ -3,7 +3,7 @@ import '../App.css';
 import IconButton from "@mui/material/IconButton";
 import {Menu} from "@mui/icons-material";
 import Button from "@mui/material/Button";
-import {TodolistList} from "../featured/TodolistList/TodolistList";
+import {TodolistList} from "../features/TodolistList/TodolistList";
 import Container from '@mui/material/Container';
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";

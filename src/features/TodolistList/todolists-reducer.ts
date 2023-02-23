@@ -1,6 +1,8 @@
 import {todolistsAPI, TodolistType} from "../../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppActionsType, RequestStatusType, setErrorAc, setStatusAc} from "../../App/app-reducer";
+import {handleServerAppError} from "../../utils/error-utils";
+import {AxiosError} from "axios";
 
 
 const initialState: Array<TodolistDomainType> = []
@@ -60,7 +62,7 @@ export const removeTodolistTC = (todolistId: string) => {
             .then((res) => {
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setStatusAc('succeeded'))
-            }).catch((e)=>{
+            }).catch((e: AxiosError)=>{
             dispatch(setStatusAc('failed'))
             dispatch(changeEntityStatusAC(todolistId, 'failed'))
             dispatch(setErrorAc(e.message))
@@ -72,9 +74,14 @@ export const addTodolistTC = (title: string) => {
         dispatch(setStatusAc('loading'))
         todolistsAPI.createTodolist(title)
             .then((res) => {
-                dispatch(addTodolistAC(res.data.data.item))
-                dispatch(setStatusAc('failed'))
-                dispatch(setErrorAc("error"))
+                if(res.data.resultCode === 0) {
+                    dispatch(addTodolistAC(res.data.data.item))
+                    dispatch(setStatusAc('failed'))
+                    dispatch(setErrorAc("error"))
+                }else {
+                    handleServerAppError(dispatch, res.data)
+                }
+
             })
     }
 }
