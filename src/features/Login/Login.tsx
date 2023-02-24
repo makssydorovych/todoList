@@ -10,6 +10,8 @@ import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
 
 type FormikErrorType ={
+    email?: string,
+    password?: string
 
 }
 export const Login = () => {
@@ -21,6 +23,7 @@ export const Login = () => {
             rememberMe: false
         },
         validate: (values) => {
+
             const errors: FormikErrorType = {}
             if (!values.email) {
                 errors.email = 'Required'
@@ -54,6 +57,7 @@ export const Login = () => {
                                onChange={formik.handleChange}
                                value={formik.values.email}
                     />
+                    {formik.errors.email && <div>{formik.errors.email}</div>}
                     <TextField type="password"
                                label="Password"
                                margin="normal"
@@ -61,6 +65,7 @@ export const Login = () => {
                                onChange={formik.handleChange}
                                value={formik.values.password}
                     />
+                    {formik.errors.password && <div>{formik.errors.password}</div>}
                     <FormControlLabel label={'Remember me'}
                                       control={<Checkbox name={"rememberMe"} checked={formik.values.rememberMe}
                                                          onChange={formik.handleChange}/>}/>
