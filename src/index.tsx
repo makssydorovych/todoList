@@ -5,9 +5,14 @@ import { createRoot } from 'react-dom/client';
 import {Provider} from "react-redux";
 import App from "./App/App";
 import {store} from "./App/store";
+import {BrowserRouter} from "react-router-dom"
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<Provider store={store}><App/></Provider>)
+root.render(
+	<BrowserRouter>
+	<Provider store={store}><App/></Provider>
+	</BrowserRouter>
+)
 
 // ReactDOM.render(<App />,  document.getElementById('root'));
 
