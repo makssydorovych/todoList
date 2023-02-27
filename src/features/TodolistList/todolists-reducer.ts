@@ -1,6 +1,6 @@
 import {todolistsAPI, TodolistType} from "../../api/todolist-api";
 import {Dispatch} from "redux";
-import {AppActionsType, RequestStatusType, setErrorAc, setStatusAc} from "../../App/app-reducer";
+import {AppActionsType, RequestStatusType, setErrorAC, setStatusAC} from "../../App/app-reducer";
 import {handleServerAppError} from "../../utils/error-utils";
 import {AxiosError} from "axios";
 
@@ -46,40 +46,41 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-T
 // thunks
 export const fetchTodolistsTC = () => {
     return (dispatch: Dispatch<ActionsType>) => {
-        dispatch(setStatusAc('loading'))
+        dispatch(setStatusAC('loading'))
         todolistsAPI.getTodolists()
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))
-                dispatch(setStatusAc('succeeded'))
+                dispatch(setStatusAC('succeeded'))
             })
     }
 }
 export const removeTodolistTC = (todolistId: string) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        dispatch(setStatusAc('loading'))
+        dispatch(setStatusAC('loading'))
         dispatch(changeEntityStatusAC(todolistId, 'loading'))
         todolistsAPI.deleteTodolist(todolistId)
             .then((res) => {
                 dispatch(removeTodolistAC(todolistId))
-                dispatch(setStatusAc('succeeded'))
+                dispatch(setStatusAC('succeeded'))
             }).catch((e: AxiosError)=>{
-            dispatch(setStatusAc('failed'))
+            dispatch(setStatusAC('failed'))
             dispatch(changeEntityStatusAC(todolistId, 'failed'))
-            dispatch(setErrorAc(e.message))
+            dispatch(setErrorAC(e.message))
         })
     }
 }
 export const addTodolistTC = (title: string) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        dispatch(setStatusAc('loading'))
+        dispatch(setStatusAC('loading'))
         todolistsAPI.createTodolist(title)
             .then((res) => {
                 if(res.data.resultCode === 0) {
                     dispatch(addTodolistAC(res.data.data.item))
-                    dispatch(setStatusAc('failed'))
-                    dispatch(setErrorAc("error"))
+                    dispatch(setStatusAC('failed'))
+
                 }else {
-                    handleServerAppError(dispatch, res.data)
+                    handleServerAppError(res.data, dispatch)
+                    dispatch(setErrorAC("error"))
                 }
 
             })
