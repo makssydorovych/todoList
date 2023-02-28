@@ -28,6 +28,7 @@ export type SetStatusAT = ReturnType<typeof setStatusAC>
 export type SetErrorAT = ReturnType<typeof setErrorAC>
 export type SetIsInitializedAT = ReturnType<typeof setIsInitializedAC>
 
+
 export type AppActionsType =
     SetStatusAT |
     SetErrorAT | SetIsInitializedAT
