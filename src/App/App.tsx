@@ -19,13 +19,14 @@ import {Login}  from '../features/Login/Login';
 import {logoutTC, meTC} from "../features/Login/Login/auth-reducer";
 import {CircularProgress} from "@mui/material";
 
-
 function App() {
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
     const initialized = useAppSelector<boolean>((state) => state.app.isInitialized)
     const isLoggedIn = useAppSelector<boolean | null>((state) => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
-    const logOutHandler=()=> dispatch(logoutTC())
+    const logOutHandler=()=> {
+        dispatch(logoutTC())
+    }
 
     useEffect(()=>{
         dispatch(meTC())
@@ -55,10 +56,11 @@ function App() {
                     <Grid>
                         <Paper style={{padding: "10px"}}>
                             <Routes>
-                                <Route path='/' element={<TodolistList/>}/>
+                                <Route  path='/' element={<TodolistList/>}/>
+                                <Route  path='/todoList' element={<TodolistList/>}/>
                                 <Route path='/login' element={<Login/>}/>
-                                <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
-                                <Route  path = '*' element = {<Navigate to='/404'/>}/>
+                                {/*<Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>*/}
+                                {/*<Route  path = '/*' element = {<Navigate to='/404'/>}/>*/}
                             </Routes>
                             
                             <ErrorSnackbar />

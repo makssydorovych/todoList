@@ -65,10 +65,10 @@ export const TodolistList: React.FC = () => {
         const thunk = addTodolistTC(title)
         dispatch(thunk)
     }, [])
-
     if(!isLoggedIn){
         return <Navigate to={'/login'}/>
     }
+
     return <>
         <Grid container style={{padding: '20px'}}>
             <AddItemForm addItem={addTodolist} />
