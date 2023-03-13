@@ -63,13 +63,13 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
 
 // thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setStatusAC({status:'loading'}))
     todolistsAPI.getTasks(todolistId)
         .then((res) => {
             const tasks = res.data.items
             const action = setTasksAC(tasks, todolistId)
             dispatch(action)
-            dispatch(setStatusAC('succeeded'))
+            dispatch(setStatusAC({status:'succeeded'}))
         }).catch((e: any) => {
         handleServerNetworkError(e, dispatch)
     })
@@ -80,11 +80,11 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
             if (res.data.resultCode === 0) {
                 const action = removeTaskAC(taskId, todolistId)
                 dispatch(action)
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatusAC({status:'succeeded'}))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
-                    dispatch(setStatusAC('failed'))
+                    dispatch(setStatusAC({status: 'failed'}))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
@@ -101,11 +101,11 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
                 const task = res.data.data.item
                 const action = addTaskAC(task)
                 dispatch(action)
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatusAC({status:'succeeded'}))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
-                    dispatch(setStatusAC('failed'))
+                    dispatch(setStatusAC({status:'failed'}))
                 } else {
                     handleServerAppError<{ item: TaskType }>(res.data, dispatch)
                 }
@@ -116,7 +116,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
 }
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
     (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setStatusAC({status:'loading'}))
         const state = getState()
         const task = state.tasks[todolistId].find(t => t.id === taskId)
         if (!task) {
@@ -139,7 +139,7 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
             .then(res => {
                 const action = updateTaskAC(taskId, domainModel, todolistId)
                 dispatch(action)
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatusAC({status:'succeeded'}))
             }).catch((e) => {
             handleServerNetworkError(e, dispatch)
         })

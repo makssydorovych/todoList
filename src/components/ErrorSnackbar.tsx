@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Snackbar from '@mui/material/Snackbar'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import MuiAlert, {AlertProps} from '@mui/material/Alert'
 import {useAppDispatch, useAppSelector} from "../App/store";
 import {setErrorAC} from "../App/app-reducer";
 
@@ -17,7 +17,7 @@ export const ErrorSnackbar = () => {
         if (reason === 'clickaway') {
             return
         }
-        dispatch(setErrorAC(null))
+        dispatch(setErrorAC({error: null}))
     }
     return (
         <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
