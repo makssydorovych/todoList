@@ -17,12 +17,12 @@ import {Navigate} from "react-router-dom";
 export const TodolistList: React.FC = () => {
     const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useAppSelector<TasksStateType>(state => state.tasks)
-    const isLoggedIn = useAppSelector((state)=>state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if(!isLoggedIn) return
+        if (!isLoggedIn) return
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -47,7 +47,7 @@ export const TodolistList: React.FC = () => {
     }, [])
 
     const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
-        const action = changeTodolistFilterAC(todolistId, value)
+        const action = changeTodolistFilterAC({ id: todolistId, filter: value})
         dispatch(action)
     }, [])
 
@@ -65,13 +65,13 @@ export const TodolistList: React.FC = () => {
         const thunk = addTodolistTC(title)
         dispatch(thunk)
     }, [])
-    if(!isLoggedIn){
+    if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
 
     return <>
         <Grid container style={{padding: '20px'}}>
-            <AddItemForm addItem={addTodolist} />
+            <AddItemForm addItem={addTodolist}/>
         </Grid>
         <Grid container spacing={3}>
             {
