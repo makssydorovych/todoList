@@ -45,7 +45,7 @@ function App() {
                         <Menu/>
                     </IconButton>
                     <Typography variant="h6">
-                        News
+                        Todolists :)
                     </Typography>
                     {isLoggedIn && <Button color="inherit" onClick={logOutHandler}>Log out</Button>}
                 </Toolbar>

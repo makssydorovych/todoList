@@ -2,46 +2,30 @@ import {Dispatch} from 'redux'
 import {setIsInitializedAC, setStatusAC} from '../../../App/app-reducer'
 import {authAPI, LoginType} from "../../../api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../../utils/error-utils";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState = {
-    isLoggedIn: false
-    // as boolean | null
-}
-
-const slice = createSlice({
-    name: "auth",
-    initialState: initialState,
-    reducers: {
-        setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
-            state.isLoggedIn = action.payload.value
-        }
-    }
-})
-export const authReducer = slice.reducer;
-export const {setIsLoggedInAC} = slice.actions;
-// thunks
-export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
-    dispatch(setStatusAC({status:'loading'}))
+export const loginTC = createAsyncThunk('auth/login', async (param: LoginType, thunkAPI) => {
+    thunkAPI.dispatch(setStatusAC({status: 'loading'}))
     try {
-        const res = await authAPI.login(data)
+        const res = await authAPI.login(param)
         if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC({value: true}))
-            dispatch(setStatusAC({status:'succeeded'}))
+            thunkAPI.dispatch(setStatusAC({status: 'succeeded'}))
+            return {isLoggedIn: true}
         } else {
-            handleServerAppError(res.data, dispatch)
+            handleServerAppError(res.data, thunkAPI.dispatch)
         }
     } catch (e: any) {
-        handleServerNetworkError(e, dispatch)
+        handleServerNetworkError(e, thunkAPI.dispatch)
     }
-}
+
+})
 export const meTC = () => async (dispatch: Dispatch) => {
-    dispatch(setStatusAC({status:'loading'}))
+    dispatch(setStatusAC({status: 'loading'}))
     try {
         const res = await authAPI.me()
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC({value: true}))
-            dispatch(setStatusAC({status:'succeeded'}))
+            dispatch(setStatusAC({status: 'succeeded'}))
         } else {
             handleServerAppError(res.data, dispatch)
         }
@@ -52,12 +36,12 @@ export const meTC = () => async (dispatch: Dispatch) => {
     }
 }
 export const logoutTC = () => async (dispatch: Dispatch) => {
-    dispatch(setStatusAC({status:'loading'}))
+    dispatch(setStatusAC({status: 'loading'}))
     try {
         const res = await authAPI.logOut()
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC({value: false}))
-            dispatch(setStatusAC({status:'succeeded'}))
+            dispatch(setStatusAC({status: 'succeeded'}))
         } else {
             handleServerAppError(res.data, dispatch)
         }
@@ -65,4 +49,27 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
         handleServerNetworkError(e, dispatch)
     }
 }
+const slice = createSlice({
+    name: "auth",
+    initialState: {
+        isLoggedIn: false
+        // as boolean | null
+    },
+    reducers: {
+        setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
+            state.isLoggedIn = action.payload.value
+        }
+    },
+    extraReducers: builder => {
+        builder.addCase(loginTC.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.isLoggedIn = action.payload.isLoggedIn
+            }
+        })
+    }
+})
+export const authReducer = slice.reducer;
+export const {setIsLoggedInAC} = slice.actions;
+// thunks
+
 
