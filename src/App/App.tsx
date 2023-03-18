@@ -14,7 +14,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import {useAppDispatch} from "./store";
 import {ErrorSnackbar} from "../components/ErrorSnackbar";
 import {Route, Routes} from 'react-router-dom';
-import {Login} from '../features/Login/Login';
+import {Login} from '../features/Auth/Login';
 import {logoutTC, meTC} from "../features/Login/Login/auth-reducer";
 import {CircularProgress} from "@mui/material";
 import {selectIsInitialized, selectStatus} from "../features/Aplication/selectors";
