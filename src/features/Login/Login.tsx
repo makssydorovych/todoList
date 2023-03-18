@@ -7,7 +7,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {useFormik} from 'formik';
+import {FormikHelpers, useFormik} from 'formik';
 import {useAppDispatch, useAppSelector} from "../../App/store";
 import {loginTC} from "./Login/auth-reducer";
 import {Navigate} from "react-router-dom";
@@ -16,6 +16,11 @@ type FormikErrorType = {
     email?: string,
     password?: string
 
+}
+type FormValueType ={
+    email: string,
+    password: string,
+    rememberMe: boolean
 }
 export const Login = () => {
     const dispatch = useAppDispatch()
@@ -41,17 +46,28 @@ export const Login = () => {
             }
             return errors
         },
-        onSubmit: values => {
-            dispatch(loginTC(values))
+        onSubmit: async (values: FormValueType, formikHelpers: FormikHelpers<FormValueType>) => {
+            const resAction = await dispatch(loginTC(values))
+
+            if (loginTC.rejected.match(resAction)){
+                if(resAction.payload?.fieldsErrors?.length){
+                    const error = resAction.payload?.fieldsErrors[0];
+                    formikHelpers.setFieldError(error.field, error.error);
+                }else{
+                    
+                }
+
+            }
+
             formik.resetForm()
         }
     })
     if (isLoggedIn) {
         return <Navigate to={'/'}/>
     }
-    return <Grid container justifyContent={'center'} >
+    return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
-            <FormControl >
+            <FormControl>
                 <FormLabel>
                     <p>To log in get registered
                         <a href={'https://social-network.samuraijs.com/'}
@@ -62,7 +78,7 @@ export const Login = () => {
                     <p>Email: free@samuraijs.com</p>
                     <p>Password: free</p>
                 </FormLabel>
-                <form onSubmit={formik.handleSubmit} >
+                <form onSubmit={formik.handleSubmit}>
                     <FormGroup>
                         <TextField label="Email"
                                    margin="normal"

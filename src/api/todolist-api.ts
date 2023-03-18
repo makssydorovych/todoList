@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -11,7 +11,7 @@ const instance = axios.create({
 // api
 export const authAPI = {
     login(data: LoginType) {
-        return instance.post<LoginType, AxiosResponse<ResponseType<{userId: number }>>>('auth/login', data);
+        return instance.post<LoginType, AxiosResponse<ResponseType<{ userId: number }>>>('auth/login', data);
     },
     me() {
         return instance.get<ResponseType<UserType>>('auth/me');
@@ -49,7 +49,7 @@ export const todolistsAPI = {
 }
 
 // types
-export type UserType ={
+export type UserType = {
     id: number,
     email: string,
     login: string
@@ -66,10 +66,14 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
+export type FieldErrorType ={
+    field: string,
+    message: string
+}
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    fieldsErrors: Array<string>
+    fieldsErrors?: Array<FieldErrorType>
     data: D
 }
 
