@@ -1,30 +1,27 @@
-import {tasksReducer} from '../features/TodolistList/tasks-reducer';
-import {todolistsReducer} from '../features/TodolistList/todolists-reducer';
-import {AnyAction, combineReducers} from 'redux';
-import thunk, {ThunkDispatch} from "redux-thunk"
-import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {appReducer} from "./app-reducer";
-import {authReducer} from "../features/Login/Login/auth-reducer";
-import {configureStore} from "@reduxjs/toolkit";
-const rootReducer = combineReducers({
-    tasks: tasksReducer,
-    todolists: todolistsReducer,
+import {combineReducers} from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import {appReducer} from '../features/Application'
+import {authReducer} from '../features/Auth'
+import {tasksReducer, todolistsReducer} from '../features/TodolistsList'
+import {configureStore} from '@reduxjs/toolkit'
+
+// объединяя reducer-ы с помощью combineReducers,
+// мы задаём структуру нашего единственного объекта-состояния
+export const rootReducer = combineReducers({
     app: appReducer,
-    auth: authReducer
+    auth: authReducer,
+    todolists: todolistsReducer,
+    tasks: tasksReducer
 })
+// непосредственно создаём store
+//export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware =>
-        getDefaultMiddleware()
-            .prepend(thunk)
+    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
 })
-// export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
 
-export type AppRootStateType = ReturnType<typeof rootReducer>
-export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
-export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
-export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
-
-export type AppDispatchType = typeof store.dispatch
+// а это, чтобы можно было в консоли браузера обращаться к store в любой момент
 // @ts-ignore
-window.store = store;
+window.store = store
+
