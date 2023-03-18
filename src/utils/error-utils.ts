@@ -1,19 +1,32 @@
-import {setErrorAC,setStatusAC} from '../App/app-reducer'
+import {appActions} from '../features/CommonActions/App'
 import {Dispatch} from 'redux'
-import {ResponseType} from '../api/todolist-api'
+import {AxiosError} from 'axios'
+import {ResponseType} from '../api/types'
 
-// generic function
-export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
-    if (data.messages.length) {
-        dispatch(setErrorAC({error: data.messages[0]}))
-    } else {
-        dispatch(setErrorAC({error:'Some error occurred'}))
+// original type:
+// BaseThunkAPI<S, E, D extends Dispatch = Dispatch, RejectedValue = undefined>
+type ThunkAPIType = {
+    dispatch: (action: any) => any
+    rejectWithValue: Function
+}
+
+export const handleAsyncServerAppError = <D>(data: ResponseType<D>,
+                                             thunkAPI: ThunkAPIType,
+                                             showError = true) => {
+    if (showError) {
+        thunkAPI.dispatch(appActions.setAppError({error: data.messages.length ? data.messages[0] : 'Some error occurred'}))
     }
-    dispatch(setStatusAC({status:'failed'}))
+    thunkAPI.dispatch(appActions.setAppStatus({status: 'failed'}))
+    return thunkAPI.rejectWithValue({errors: data.messages, fieldsErrors: data.fieldsErrors})
 }
 
-export const handleServerNetworkError = (error: { message: string }, dispatch: Dispatch) => {
-    dispatch(setErrorAC(error.message ? {error: error.message} : {error:'Some error occurred'}))
-    dispatch(setStatusAC({status:'failed'}))
-}
+export const handleAsyncServerNetworkError = (error: AxiosError,
+                                              thunkAPI: ThunkAPIType,
+                                              showError = true) => {
+    if (showError) {
+        thunkAPI.dispatch(appActions.setAppError({error: error.message ? error.message : 'Some error occurred'}))
+    }
+    thunkAPI.dispatch(appActions.setAppStatus({status: 'failed'}))
 
+    return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+}
