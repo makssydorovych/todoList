@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react'
-import './App.css'
+import '../App.css'
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {useSelector} from 'react-redux'
 import {Route} from 'react-router-dom'
