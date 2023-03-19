@@ -1,12 +1,14 @@
 import React from 'react'
-import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from '@material-ui/core'
 import {FormikHelpers, useFormik} from 'formik'
 import {useSelector} from 'react-redux'
-import {login} from './auth-reducer'
-import {Redirect} from 'react-router-dom'
 import {selectIsLoggedIn} from './selectors'
 import {authActions} from './index'
-import {useAppDispatch} from "../../App/store";
+import {useAppDispatch} from "../../utils/redux-utils";
+import {login} from "./auth-reduser";
+import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel} from "@mui/material";
+import Grid from '@mui/material/Grid';
+import {Navigate} from "react-router-dom";
+
 
 
 type FormValuesType = {
@@ -52,11 +54,11 @@ export const Login = () => {
     })
 
     if (isLoggedIn) {
-        return <Redirect to={"/"} />
+        return <Navigate to={"/"} />
     }
 
 
-    return <Grid container justify="center">
+    return <Grid >
         <Grid item xs={4}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>

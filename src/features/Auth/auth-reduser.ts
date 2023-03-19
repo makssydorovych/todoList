@@ -1,4 +1,5 @@
-import {handleServerNetworkError, handleServerAppError} from '../../utils/error-utils'
+
+import {handleAsyncServerAppError, handleAsyncServerNetworkError} from '../../utils/error-utils'
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {FieldErrorType, LoginParamsType} from '../../api/types'
 import {appActions} from '../CommonActions/App'
@@ -15,10 +16,10 @@ export const login = createAsyncThunk<undefined, LoginParamsType,
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return
         } else {
-            return handleServerAppError(res.data, thunkAPI)
+            return handleAsyncServerAppError(res.data, thunkAPI)
         }
     } catch (error) {
-        return handleServerNetworkError(error, thunkAPI)
+        return handleAsyncServerNetworkError(error, thunkAPI)
     }
 })
 export const logout = createAsyncThunk('auth/logout', async (param, thunkAPI) => {
@@ -29,10 +30,10 @@ export const logout = createAsyncThunk('auth/logout', async (param, thunkAPI) =>
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return
         } else {
-            return handleServerAppError(res.data, thunkAPI)
+            return handleAsyncServerAppError(res.data, thunkAPI)
         }
     } catch (error) {
-        return handleServerNetworkError(error, thunkAPI)
+        return handleAsyncServerNetworkError(error, thunkAPI)
     }
 })
 

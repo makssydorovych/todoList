@@ -1,13 +1,15 @@
 import React, {useCallback, useEffect} from 'react'
-import {AddItemForm, AddItemFormSubmitHelperType} from '../../../components/AddItemForm/AddItemForm'
-import {EditableSpan} from '../../../components/EditableSpan/EditableSpan'
-import {Button, IconButton, Paper, PropTypes} from '@material-ui/core'
-import {Delete} from '@material-ui/icons'
 import {Task} from './Task/Task'
 import {FilterValuesType, TodolistDomainType} from '../todolists-reducer'
 import {tasksActions, todolistsActions} from '../index'
 import {TaskStatuses, TaskType} from '../../../api/types'
 import {useActions, useAppDispatch} from '../../../utils/redux-utils'
+import {Delete} from "@mui/icons-material";
+import EditableSpan from "../../../components/EditableSpan/EditableSpan";
+import {Button, Paper} from "@mui/material";
+import {AddItemForm, AddItemFormSubmitHelperType} from "../../../components/AddItemForm/AddItemForm";
+import IconButton from "@mui/material/IconButton";
+
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -32,7 +34,6 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
 
         let thunk = tasksActions.addTask({title: title, todolistId: props.todolist.id})
         const resultAction = await dispatch(thunk)
-
         if (tasksActions.addTask.rejected.match(resultAction)) {
             if (resultAction.payload?.errors?.length) {
                 const errorMessage = resultAction.payload?.errors[0]
