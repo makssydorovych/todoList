@@ -6,7 +6,7 @@ import {Route} from 'react-router-dom'
 import {authActions, authSelectors, Login} from '../features/Auth'
 import {useActions} from '../utils/redux-utils'
 import {selectIsInitialized, selectStatus} from "../features/Aplication/selectors";
-import {TodolistsList} from "../features/TodolistList/TodolistList";
+import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {AppBar, Button, CircularProgress, Container, LinearProgress, Toolbar, Typography} from "@mui/material";
 import {appActions} from "../features/Aplication";
 import IconButton from "@mui/material/IconButton";
