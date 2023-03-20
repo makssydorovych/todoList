@@ -18,7 +18,7 @@ export const login = createAsyncThunk<undefined, LoginParamsType,
         } else {
             return handleAsyncServerAppError(res.data, thunkAPI)
         }
-    } catch (error) {
+    } catch (error:any) {
         return handleAsyncServerNetworkError(error, thunkAPI)
     }
 })
@@ -32,7 +32,7 @@ export const logout = createAsyncThunk('auth/logout', async (param, thunkAPI) =>
         } else {
             return handleAsyncServerAppError(res.data, thunkAPI)
         }
-    } catch (error) {
+    } catch (error:any) {
         return handleAsyncServerNetworkError(error, thunkAPI)
     }
 })
