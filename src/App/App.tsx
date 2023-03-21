@@ -2,21 +2,23 @@ import React, {useCallback, useEffect} from 'react'
 import '../App.css'
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {useSelector} from 'react-redux'
-import {Route} from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
 import {authActions, authSelectors, Login} from '../features/Auth'
-import {useActions} from '../utils/redux-utils'
+import {useActions, useAppDispatch} from '../utils/redux-utils'
 import {selectIsInitialized, selectStatus} from "../features/Aplication/selectors";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {AppBar, Button, CircularProgress, Container, LinearProgress, Toolbar, Typography} from "@mui/material";
 import {appActions} from "../features/Aplication";
 import IconButton from "@mui/material/IconButton";
 import {Menu} from "@mui/icons-material";
+import {todolistsActions} from "../features/TodolistsList";
 
 type PropsType = {
     demo?: boolean
 }
 
 function App({demo = false}: PropsType) {
+
     const status = useSelector(selectStatus)
     const isInitialized = useSelector(selectIsInitialized)
     const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
@@ -24,23 +26,28 @@ function App({demo = false}: PropsType) {
     const {logout} = useActions(authActions)
     const {initializeApp} = useActions(appActions)
 
+    const {fetchTodolists} = useActions(todolistsActions)
+
+    useEffect(() => {
+        fetchTodolists()
+    }, [])
     useEffect(() => {
         if (!demo) {
             initializeApp()
         }
     }, [])
 
+
+
     const logoutHandler = useCallback(() => {
         logout()
     }, [])
-
     if (!isInitialized) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
     }
-
     return (
         <div className="App">
             <ErrorSnackbar/>
@@ -57,8 +64,10 @@ function App({demo = false}: PropsType) {
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <Route path="/" element={<TodolistsList demo={demo}/>} />
-                <Route path="users/*" element={<Login />} />
+              <Routes>
+                  <Route path="/" element={<TodolistsList demo={demo}/>} />
+                  <Route path="users/*" element={<Login />} />
+              </Routes>
             </Container>
         </div>
     )
