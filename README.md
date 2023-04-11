@@ -1,17 +1,17 @@
-#Todolist
+# Todolist
 
 ![image](https://res.cloudinary.com/dkombzxne/image/upload/v1681215130/todolist_sy8rab.png)
 
-##About project
+## About project
 Authorization.
 CRUD operations with lists and todos.
 Material UI layout.
 Error processing.
 
-##Technologies
+## Technologies
 React, Redux, Redux-toolkit, Material-UI, TS.
 
-###Project setup
+### Project setup
 npm install
 npm run serve
 
