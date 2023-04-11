@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react'
 import '../App.css'
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {useSelector} from 'react-redux'
-import {Route, Routes} from 'react-router-dom'
+import {Navigate, Route, Routes} from 'react-router-dom'
 import {authActions, authSelectors, Login} from '../features/Auth'
 import {useActions, useAppDispatch} from '../utils/redux-utils'
 import {selectIsInitialized, selectStatus} from "../features/Aplication/selectors";
@@ -65,8 +65,11 @@ function App({demo = false}: PropsType) {
             </AppBar>
             <Container fixed>
               <Routes>
+                  <Route path="/todoList" element={<TodolistsList demo={demo}/>} />
+                  <Route path="/login" element={<Login />} />
                   <Route path="/" element={<TodolistsList demo={demo}/>} />
-                  <Route path="users/*" element={<Login />} />
+                  <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
+                  <Route path="*" element={<Navigate to="/404"/>}/>
               </Routes>
             </Container>
         </div>
