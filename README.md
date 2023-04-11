@@ -1,5 +1,6 @@
 #Todolist
-![image]([https://res.cloudinary.com/dkombzxne/image/upload/v1654176688/portfolio/exam-img_x7g4td.jpg](https://res.cloudinary.com/dkombzxne/image/upload/v1681215130/todolist_sy8rab.png))
+
+![image](https://res.cloudinary.com/dkombzxne/image/upload/v1681215130/todolist_sy8rab.png)
 
 ##About project
 Authorization.
