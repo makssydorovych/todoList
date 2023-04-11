@@ -58,11 +58,11 @@ export const Login = () => {
     }
 
 
-    return <Grid >
-        <Grid item xs={4}>
-            <form onSubmit={formik.handleSubmit}>
-                <FormControl>
-                    <FormLabel>
+    return <>
+        <Grid item xs={2} >
+            <form onSubmit={formik.handleSubmit}  >
+                <FormControl style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <FormLabel style={{background: 'white', borderRadius: '10px', padding: '10px', marginTop: '20px'}}>
                         <p>
                             To log in get registered <a href={'https://social-network.samuraijs.com/'}
                                                         target={'_blank'}>here</a>
@@ -76,8 +76,9 @@ export const Login = () => {
                             Password: free
                         </p>
                     </FormLabel>
-                    <FormGroup>
+                    <FormGroup style={{color: 'white'}}>
                         <TextField
+
                             label="Email"
                             margin="normal"
                             {...formik.getFieldProps("email")}
@@ -102,5 +103,5 @@ export const Login = () => {
                 </FormControl>
             </form>
         </Grid>
-    </Grid>
+    </>
 }

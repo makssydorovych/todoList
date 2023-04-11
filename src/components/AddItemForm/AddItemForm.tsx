@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 
 
-export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void}
+export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void }
 type AddItemFormPropsType = {
     addItem: (title: string, helper: AddItemFormSubmitHelperType) => void
     disabled?: boolean
@@ -35,8 +35,9 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
         }
     }
 
-    return <div>
-        <TextField variant="outlined"
+    return <>
+        <TextField color ="primary"
+                   variant="outlined"
                    disabled={disabled}
                    error={!!error}
                    value={title}
@@ -44,9 +45,11 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
                    onKeyPress={onKeyPressHandler}
                    label="Title"
                    helperText={error}
+
+
         />
         <IconButton color="primary" onClick={addItemHandler} disabled={disabled} style={{marginLeft: '5px'}}>
             <AddBox/>
         </IconButton>
-    </div>
+    </>
 })
